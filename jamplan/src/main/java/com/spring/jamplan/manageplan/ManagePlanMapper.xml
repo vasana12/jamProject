@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--맵퍼클래스 네임스페이스 : 맵퍼.xml과 맵퍼.java를 맴핑 -->
+<mapper namespace="com.spring.jamplan.manageplan.ManagePlanMapper">
+	
+	<!-- getTeamRole -->
+	<resultMap type="com.spring.jamplan.model.TeamInfoVO" id="teamInfoResultMap">
+		<result property="teamNo" column="teamNo" />
+		<result property="teamName" column="teamName" />
+		<result property="id" column="id" />
+		<result property="role" column="role" />
+		<result property="planNo" column="planNo" />
+		<result property="planName" column="planName" />
+		<result property="jonDate" column="jonDate" />
+	</resultMap>
+	
+	<select id="getOthers" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
+      SELECT * FROM TeamInfo WHERE ID = #{id, jdbcType=VARCHAR } 
+         and teamName = (select unique teamName from teamInfo where planName=#{planName, jdbcType=VARCHAR}) 
+                order by teamName
+   </select>
+
+</mapper>

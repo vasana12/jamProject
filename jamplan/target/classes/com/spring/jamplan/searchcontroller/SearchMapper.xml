@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- create table plan( image varchar2(100), planDate varchar2(200), planName 
+   varchar2(200), goodCount varchar2(400), readCount varchar2(200) ); -->
+
+<mapper
+   namespace="com.spring.jamplan.searchcontroller.SearchMapper">
+
+	<resultMap type="com.spring.jamplan.model.PlanVO" id="planResultMap">
+		<result property="teamNo" column="teamNo" />
+		<result property="planNo" column="planNo" />
+		<result property="planName" column="planName" />	
+		<result property="selectDate" column="selectDate" />
+		<result property="goodCount" column="goodCount" />
+		<result property="readCount" column="readCount" />   			
+		<result property="isOpen" column="isOpen" />
+		<result property="teamImage" column="teamImage" />
+   </resultMap>
+   
+   <resultMap type="com.spring.jamplan.model.PlanTableVO" id="planTableResultMap">
+      <result property="planNo" column="planNo" />
+      <result property="planSeq" column="planSeq" />
+      <result property="placeName" column="placeName" />
+      <result property="memo" column="memo" />
+      <result property="selectDate" column="selectDate" />
+   </resultMap>
+   
+   <resultMap type="com.spring.jamplan.model.UserVO" id="UserResultMap">
+      <result property="id" column="id" />
+   </resultMap>
+   
+   <resultMap type="com.spring.jamplan.model.LikeVO" id="LikeCountMap">
+      <result property="likeCheck" column="likeCheck" />
+   </resultMap>
+   
+   <resultMap type="com.spring.jamplan.model.LikeVO" id="LikeResultMap">
+      <result property="planNo" column="planNo" />
+      <result property="id" column="id" />
+      <result property="likeYn" column="likeYn" />
+   </resultMap>
+
+	<resultMap type="com.spring.jamplan.model.CommentVO" id="CommentResultMap">
+		<result property="planNo" column="planNo" />
+		<result property="cnt" column="cnt" />
+		<result property="id" column="id" />
+		<result property="content" column="content" />
+	</resultMap>
+
+
+   <select id="getPlanList" resultMap="planResultMap" parameterType="com.spring.jamplan.model.DataVO">
+      <!-- SELECT UNIQUE TEAMINFO.TEAMNO, PLAN.PLANNO, TEAMINFO.PLANNAME, SELECTDATE, 
+            GOODCOUNT, READCOUNT, ISOPEN, TEAMIMAGE FROM PLAN, TEAMINFO 
+               WHERE PLAN.PLANNAME = TEAMINFO.PLANNAME AND PLAN.TEAMNO = TEAMINFO.TEAMNO 
+                  AND ISOPEN=1 ORDER BY SELECTDATE DESC -->
+      select * from (select rownum rnum, selectDate, planName, readCount, goodCount, planNo from (select * from plan
+       where isOpen=1 
+       <!-- <if test='days != null '>
+         and selectDate like '%'||#{days, jdbcType=VARCHAR}||'%'
+      </if> -->
+      <if test='topic.equals("제목")'>
+         and planName like '%'||#{keyword, jdbcType=VARCHAR}||'%'
+      </if>
+       <if test='selectDate.equals("a")'>
+         order by selectDate desc
+      </if>
+      <if test='readCount.equals("a")'>
+         order by readCount desc
+      </if>
+      <if test='goodCount.equals("a")'>
+         order by goodCount desc
+      </if>
+      <if test='planName.equals("a")'>
+         order by planName 
+      </if>
+       )) 
+      where rnum&gt;=#{startrow} and rnum&lt;=#{endrow} 
+   </select>
+   
+   <select id="getPlanTableList" parameterType="com.spring.jamplan.model.PlanTableVO" resultMap="planTableResultMap">
+      SELECT * FROM planTable where planNo=#{planNo, jdbcType=INTEGER}
+      
+   </select>   
+   
+
+   <select id="planSearch" parameterType="com.spring.jamplan.model.PlanVO" resultMap="planResultMap">
+      SELECT * FROM plan where isOpen = 1
+      
+      <if test='planName != null '>
+         and planName like '%'||#{planName, jdbcType=VARCHAR}||'%' order by planName
+      </if>
+      <if test='selectDate != null '>
+         and selectDate like '%'||#{selectDate, jdbcType=VARCHAR}||'%' order by selectDate desc
+      </if>
+
+   </select>
+
+   <select id="clickSearch" parameterType="com.spring.jamplan.model.PlanVO" resultMap="planResultMap">
+      SELECT * FROM plan where isOpen = 1
+
+      <if test='selectDate != null and selectDate.equals("a")'>
+         order by selectDate desc
+      </if>
+      <if test='readCount != null and readCount.equals(1)'>
+         order by readCount desc
+      </if>
+      <if test='goodCount != null and goodCount.equals(2)'>
+         order by goodCount desc
+      </if>
+      <if test='planName != null and planName.equals("b")'>
+         order by planName
+      </if>
+   </select>
+  
+   
+   <select id="getUserId" parameterType="com.spring.jamplan.model.UserVO" resultMap="UserResultMap">
+      select * from userVO where id = #{id, javaType=String}
+   </select>
+   
+   
+   <select id="getLikeCount" parameterType="com.spring.jamplan.model.LikeVO" resultMap="LikeCountMap">
+      <!-- row체크하는것 -->
+      SELECT  count (*) likeCheck FROM LIKETO where id = #{id, jdbcType=VARCHAR} AND planNo = #{planNo, jdbcType=INTEGER}
+   </select>
+   
+   <select id="getLikeData" parameterType="com.spring.jamplan.model.LikeVO" resultMap="LikeResultMap">
+      
+      SELECT  planNo,id,likeYn FROM LIKETO where id = #{id, jdbcType=VARCHAR}  AND planNo = #{planNo, jdbcType=INTEGER}
+   </select>
+   
+   <insert id="insertLikeData" parameterType="com.spring.jamplan.model.LikeVO">
+      insert into LIKETO(planNo, id, likeYn)  VALUES(#{planNo, jdbcType = INTEGER}, #{id, jdbcType=VARCHAR}, #{likeYn, jdbcType=VARCHAR})
+   </insert>
+   
+   <update id="updateLikeData" parameterType="com.spring.jamplan.model.LikeVO">
+      UPDATE LIKETO SET likeYn = #{likeYn, jdbcType=VARCHAR}  where id = #{id, jdbcType=VARCHAR}  AND planNo = #{planNo, jdbcType=INTEGER}
+   </update>
+   
+   <update id="updateTotalLike" parameterType="com.spring.jamplan.model.LikeVO">
+         update plan set GOODCOUNT=(SELECT  count(*) FROM LIKETO where planNo = #{planNo, jdbcType=INTEGER} and likeYn ='Y')  where planNo = #{planNo, jdbcType=INTEGER}
+   </update>
+   
+   <!-- 조회수 -->
+   <update id="updateReadCount" parameterType="com.spring.jamplan.model.PlanVO">
+         update plan set readCount = nvl((select distinct readCount from plan where planNo = #{planNo, jdbcType=INTEGER}) ,0)+1 where planNo = #{planNo, jdbcType=INTEGER}
+   </update>
+
+
+	<!-- 모달 댓글 -->
+	<select id="getComments" parameterType="int" resultType="com.spring.jamplan.model.CommentVO">
+		select * from commentTable where planNo = #{planNo, jdbcType=INTEGER} order by cnt
+	</select>
+	
+	<insert id="insertComment" parameterType="com.spring.jamplan.model.CommentVO">
+		insert into commentTable values	(#{planNo}, COMMENT_SEQ.NEXTVAL, #{id}, #{content})
+	</insert>
+	
+	<delete id="deleteComment" parameterType="com.spring.jamplan.model.CommentVO">
+		delete from commentTable where id=#{id} and planNo = #{planNo} and cnt = #{cnt}
+	</delete>
+	
+	<!-- 페이징처리 -->
+   <select id="getAllList" parameterType="com.spring.jamplan.model.DataVO" resultType="int" >
+      select count(*) from plan where isOpen = 1 
+      
+      <!-- <if test='topic.equals("날짜")'>
+         and selectDate like '%'||#{keyword, jdbcType=VARCHAR}||'%'
+      </if> -->
+      <if test='topic.equals("제목")'>
+         and planName like '%'||#{keyword, jdbcType=VARCHAR}||'%'
+      </if>
+      
+   </select>
+</mapper>

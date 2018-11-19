@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.jamplan.manageplan.MapMapper">
+   
+   <resultMap type="com.spring.jamplan.model.MapVO" id="mapMemberResultMap">
+      <result property="planNo" column="PLANNO" />
+      <result property="selectDate" column="SELECTDATE" />
+      <result property="id" column="ID" />
+      <result property="pickCount" column="PICKCOUNT" />
+      <result property="userColor" column="USERCOLOR" />
+      <result property="placeName" column="PLACENAME" />
+      <result property="lat" column="LAT" />
+      <result property="lng" column="LNG" />
+      <result property="address" column="ADDRESS" />      
+      <result property="confirm" column="CONFIRM" />
+   </resultMap>
+      
+    <select id="getAllPickList" parameterType="MapVO" resultMap="mapMemberResultMap">
+      select * 
+      from planMap 
+      where rowid IN (
+          select min(rowid) over(partition by placeName) 
+          from planMap    
+          where planNo = #{planNo, javaType=int}
+          and selectDate = #{selectDate,javaType=String}
+      )
+      order by pickCount desc
+   </select>
+<!--  <select id="getAllPickList" parameterType="MapVO" resultMap="mapMemberResultMap">
+      select  placeName, max(pickCount) as pickCount, max(lat) as lat, max(lng) as lng,
+             address, max(confirm) as confirm, userColor
+      from planMap   
+      where planNo = #{planNo, javaType=int}
+      and selectDate = #{selectDate,javaType=String}
+        group by placeName, address,userColor
+      order by pickCount desc
+   </select>  -->
+
+   <select id="getPickList" parameterType="MapVO" resultMap="mapMemberResultMap">
+      select * 
+      from planMap 
+      where planNo = #{planNo, javaType=int}
+      and selectDate = #{selectDate,javaType=String}
+      and   placeName = #{placeName, javaType=String}  
+   </select>
+      
+   <select id="checkPick" parameterType="MapVO" resultType="int">
+      select count(*) 
+      from planMap 
+      where planNo = #{planNo, javaType=int}
+      and selectDate = #{selectDate,javaType=String}
+      and   id = #{id, javaType=String}
+      and placeName = #{placeName, javaType=String}      
+   </select>
+   
+   <insert id="insertMember" parameterType="MapVO" >
+      insert into planMap values
+         (#{planNo, javaType=int},
+         #{selectDate,javaType=String},
+         #{id, javaType=String}, 
+         #{pickCount, javaType=int},
+         #{userColor, javaType=String}, 
+         #{placeName, javaType=String},
+         #{lat, javaType=double}, 
+         #{lng, javaType=double}, 
+         #{address, javaType=String},
+         #{confirm, javaType=int})         
+   </insert>
+   
+   <delete id="deleteMember" parameterType="MapVO">
+      delete from planMap 
+      where planNo = #{planNo, javaType=int}
+      and selectDate = #{selectDate,javaType=String}
+      and id = #{id, javaType=String} 
+      and placeName = #{placeName, javaType=String}
+   </delete>
+   
+   <select id="pickCount" parameterType="MapVO" resultType="int">
+      select count(*) 
+      from planMap 
+      where planNo = #{planNo, javaType=int}
+      and selectDate = #{selectDate,javaType=String}
+      and placeName = #{placeName, javaType=String}
+   </select>
+   
+   <update id="updatePickCount" parameterType="MapVO" >
+      update planMap set pickCount=#{pickCount, javaType=int} 
+      where planNo = #{planNo, javaType=int}
+      and selectDate = #{selectDate,javaType=String}
+      and placeName = #{placeName, javaType=String}
+   </update>
+      
+   <update id="confirmPlace" parameterType="java.util.HashMap">
+      update planMap set confirm=
+      case
+          when placeName in
+         <foreach collection="confirmPlaceList" index="key" item="placeName" open="(" close=")" separator=",">
+            #{placeName}
+          </foreach>
+             then 1
+         else 0
+      end
+      where planNo = #{planNo, javaType=int}
+      and selectDate = #{selectDate, javaType=String}   
+   </update>
+   
+   <update id="resetPlace" parameterType="MapVO">
+      update planMap set confirm=0
+      where planNo = #{planNo, javaType=int}
+      and selectDate = #{selectDate,javaType=String}
+   </update>
+   
+   <update id="changeColor" parameterType="MapVO">
+      update planMap set userColor= #{userColor,javaType=String}
+      where planNo = #{planNo, javaType=int}
+      and id = #{id, javaType=String} 
+   </update>
+   
+	<select id="getSelectDateMap" parameterType="CalendarVO" resultMap="mapMemberResultMap">
+      select selectDate
+      from planDate
+      where confirmIndicator = 1
+      and planNo = #{planNo, javaType=int} 
+      order by selectDate
+    </select> 
+    
+    <delete id="deleteSelectDateMap" parameterType="java.util.HashMap">
+	  delete from planMap
+	  where planNo = #{planNo, javaType=int}
+	  <choose>
+	  	<when test="delDateList.size != 0">
+	  		and selectDate not in 
+	  		<foreach collection="delDateList" index="key" item="DateList" open="(" close=")" separator=",">
+		  		#{DateList}
+		  	</foreach>	
+	  	</when>
+	  </choose>
+    </delete>
+   
+<!-- 
+   collection = 전달받은 인자. List나 Array 형태만 가능
+   item = 전달받은 인자값을 alias 명으로 대체
+   open = 해당 구문이 시작될때 삽입할 문자열
+   close = 해당 구문이 종료될때 삽입할 문자열
+   separator = 반복 되는 사이에 출력할 문자열
+   index=반복되는 구문 번호이다. 0부터 순차적으로 증가
+ -->   
+</mapper> 
+ 

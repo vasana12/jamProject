@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+
+		font-family: 'Noto Sans KR', sans-serif !important;
+
+#section-home {
+	background: url(./img/yosemite.jpg) !important;
+}
+
+.align-self-center a button {
+   margin-bottom: 5px !important ;
+}

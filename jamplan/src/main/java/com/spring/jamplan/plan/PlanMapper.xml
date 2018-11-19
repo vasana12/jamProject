@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.spring.jamplan.plan.PlanMapper">
+   
+   <resultMap type="com.spring.jamplan.model.PlanTableVO" id="planTableMap">
+      <result property="selectDate" column="selectDate" />
+      <result property="placeName" column="placeName" />
+      <result property="memo" column="memo" />
+   </resultMap>
+
+   <resultMap type="com.spring.jamplan.model.MapVO" id="planMapMap">
+      <result property="planNo" column="planNo" />
+      <result property="selectDate" column="selectDate" />
+      <result property="placeName" column="placeName" />
+   </resultMap>
+   
+      
+   <select id="getPlanTable" parameterType="com.spring.jamplan.model.PlanTableVO" resultMap="planTableMap">
+		select * from planTable 
+		where planNo = #{planNo, jdbcType=INTEGER}
+		and placeName = #{placeName, jdbcType=VARCHAR}
+		and selectDate = #{selectDate, jdbcType=VARCHAR}
+   </select>
+    
+    
+   <select id="getAllPlanTable" parameterType="com.spring.jamplan.model.PlanTableVO" resultMap="planTableMap">
+		select * from planTable 
+		where planNo = #{planNo, jdbcType=INTEGER}
+		order by selectDate, planSeq
+   </select>
+   
+   
+   <delete id="deletePlanTable" parameterType="com.spring.jamplan.model.PlanTableVO">
+   		delete from planTable
+   		where planNo = #{planNo, jdbcType=INTEGER} 
+   		and (placeName ,selectDate) not in 
+   		(select placeName, selectDate 
+   		 from planMap 
+   		 where planNo = #{planNo, jdbcType=INTEGER} 
+   		 and confirm = 1)
+   </delete>
+  
+   <select id="getPlanMap" parameterType="com.spring.jamplan.model.MapVO" resultMap="planMapMap">
+      select * from planMap
+      where planNo = #{planNo, jdbcType=INTEGER}
+      and confirm = 1 
+      order by selectDate 
+   </select>
+    
+    <insert id="insertPlanTable" parameterType="com.spring.jamplan.model.PlanTableVO">
+	    insert into planTable(planNo, selectDate, placeName, planSeq)
+	    values(#{planNo, jdbcType=INTEGER}, #{selectDate, jdbcType=VARCHAR}, #{placeName, jdbcType=VARCHAR}, #{planSeq, jdbcType=INTEGER})
+    </insert>
+    
+	<update id="updatePlanTable" parameterType="com.spring.jamplan.model.PlanTableVO">   
+    	update planTable set planSeq = #{planSeq, jdbcType=INTEGER}
+    	where planNo = #{planNo, jdbcType=INTEGER}
+    	and placeName = #{placeName, jdbcType=VARCHAR}
+    	and selectDate = #{selectDate, jdbcType=VARCHAR}
+    </update>
+    
+	<update id="savePlanTable" parameterType="java.util.HashMap">
+		update planTable set memo = #{memo, jdbcType=VARCHAR}
+		where planNo = #{planNo, jdbcType=INTEGER}
+		and planSeq =#{planSeq, jdbcType=INTEGER}
+	</update> 
+	
+	<update id="updateIsOpen" parameterType="com.spring.jamplan.model.PlanVO">
+      update plan set isOpen = #{isOpen, jdbcType=INTEGER} where planNo = #{planNo, jdbcType=INTEGER}
+   </update>
+   
+   <update id="updateIsOpenPT" parameterType="com.spring.jamplan.model.PlanTableVO">
+      update planTable set isOpen = #{isOpen, jdbcType=INTEGER} where planNo = #{planNo, jdbcType=INTEGER}
+   </update>
+</mapper>

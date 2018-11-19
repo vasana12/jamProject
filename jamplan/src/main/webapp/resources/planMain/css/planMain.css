@@ -1,0 +1,120 @@
+@charset "UTF-8";
+   * {box-sizing: border-box;}
+
+      /*>>>>>>>>>>>>> aside부분의 채팅창에 대한 css <<<<<<<<<<<<<<<*/
+
+      .card {
+         position: absolute;
+         bottom: 0;
+         float: right;
+      }
+      
+      .card-header {
+         padding-right:10px;
+         padding-left: 10px;
+         
+      }
+      /*>>>>>>>>>>>> aside부분의 채팅창에 대한 css 끝 <<<<<<<<<<<<*/
+      
+      /*>>>>>>>>>>>>>>>> 채팅창에 대한 css <<<<<<<<<<<<<<<<<<*/
+      .open-button {
+        background-color: #BD3D3A;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        
+        position: fixed;
+        bottom: 23px;
+        right: 28px;
+        width: 140px;
+      }
+      
+      .avatar {
+          vertical-align: middle;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+      }
+      
+      .msg {
+         font-weight: 1000 !important;
+         margin-bottom : 10px; 
+      }
+      
+      .msg_right {
+         float: riqht !important;
+         text-align: right;
+      }
+      
+      #chatTextarea {
+         height: 300px !important;
+         overflow-y: scroll;
+      }
+      
+      /*>>>>>>>>>>>>> Enter버튼에 대한 css <<<<<<<<<<<<<<*/
+      #sendButton {
+         width: 77px;
+         padding-right: 10px;
+         padding-left: 10px;
+         margin-bottm: 0px;
+      }
+      
+      /* The popup form - hidden by default */
+      .form-popup {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        right: 15px;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+      }
+      
+      /* Add styles to the form container */
+      .form-container {
+        max-width: 300px;
+        padding: 10px;
+        background-color: white;
+      }
+      
+      /* Full-width input fields */
+      .form-container input[type=text] {
+        width: 70%;
+        padding: 15px;
+        margin: 7px 0 15px 0;
+        border: none;
+        background: #f1f1f1;
+      }
+      
+      /* When the inputs get focus, do something */
+      .form-container input[type=text]:focus {
+        background-color: #ddd;
+        outline: none;
+      }
+      
+      /* Set a style for the submit/login button */
+      .form-container .btn {
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.8;
+        border-color: #3395ff;
+         background: #3395ff;
+      }
+      
+      /* Add a red background color to the cancel button */
+      .form-container .cancel {
+        background-color: #B93A32;
+      }
+      
+      /* Add some hover effects to buttons */
+      .form-container .btn:hover, .open-button:hover {
+        opacity: 1;
+      }
+      
+/* ================== footer 설정 ===========================*/
+ .site-footer {
+   padding-bottom: 0px !important;
+} 

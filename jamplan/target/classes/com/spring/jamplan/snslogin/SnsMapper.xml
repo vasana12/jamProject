@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--맵퍼클래스 네임스페이스 : 맵퍼.xml과 맵퍼.java를 맴핑 -->
+<mapper namespace="com.spring.jamplan.snslogin.SnsMapper">
+
+	<!-- column 은 대소구분 하지 않는다. 디비 컬럼을 의미함 참고할 점은 resultMap 의 id는 소문자로 시작 왜?->객체이름이니까 -->
+	<resultMap type="com.spring.jamplan.model.UserVO" id="UserResultMap">
+		<result property="id" column="id" />
+		<result property="email" column="email" />
+		<result property="pass" column="pass" />
+		<result property="nation" column="nation" />
+		<result property="gender" column="gender" />
+		<result property="snsLink" column="snsLink" />
+		<result property="travelType" column="travelType" />
+		<result property="hobby" column="hobby" />
+		<result property="age" column="age" />
+		<result property="isAdmin" column="isAdmin" />
+		<result property="signDate" column="signDate" />
+	</resultMap>
+	
+	<select id="getUserInfo" parameterType="com.spring.jamplan.model.UserVO" resultMap="UserResultMap">
+		select * from userInfo where id = #{id, javaType = String}
+	</select>
+	
+	<insert id="insertUser" parameterType="com.spring.jamplan.model.UserVO">
+		insert into userInfo(id) values (#{id})
+	</insert>
+</mapper>

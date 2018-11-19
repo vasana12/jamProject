@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.jamplan.myinfo.MyInfoMapper">
+
+    <resultMap type="com.spring.jamplan.model.UserVO" id="userResultMap">
+        <result property="id" column="id" />
+        <result property="email" column="email" />
+        <result property="pass" column="pass" />
+        <result property="image" column="image" />
+        <result property="isAdmin" column="isAdmin" />
+        <result property="signDate" column="signDate" />
+    </resultMap>
+    
+    <resultMap type="com.spring.jamplan.model.TeamInfoVO" id="teamInfoResultMap">
+        <result property="teamNo" column="teamNo" />
+        <result property="teamName" column="teamName" />
+        <result property="id" column="id" />
+        <result property="role" column="role" />
+        <result property="planNo" column="planNo" />
+        <result property="planName" column="planName" />
+    </resultMap>
+    
+    <select id="getMyInfo" parameterType="com.spring.jamplan.model.UserVO" resultMap="userResultMap">
+        SELECT ID, EMAIL, PASS, IMAGE, SIGNDATE FROM USERINFO WHERE ID=#{id, jdbcType=VARCHAR}
+    </select>
+    
+    <update id="updateMyInfo" parameterType="com.spring.jamplan.model.UserVO">
+        UPDATE USERINFO SET EMAIL=#{email, jdbcType=VARCHAR}, PASS=#{pass, jdbcType=VARCHAR}, NATION=#{nation, jdbcType=VARCHAR},
+               GENDER=#{gender, jdbcType=VARCHAR}, AGE=#{age, jdbcType=INTEGER}, TRAVELTYPE=#{travelType, jdbcType=VARCHAR}
+        WHERE ID=#{id, jdbcType=VARCHAR}
+    </update>
+    
+    <insert id="setProfileImage" parameterType="com.spring.jamplan.model.UserVO">
+        UPDATE USERINFO SET IMAGE=#{image, jdbcType=VARCHAR} WHERE ID=#{id, jdbcType=VARCHAR}
+    </insert>
+    
+    <select id="getTeamListAs" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">
+        SELECT UNIQUE TEAMNO, TEAMNAME, ID, ROLE, JOINDATE, TEAMIMAGE FROM TEAMINFO 
+        WHERE ID=#{id, jdbcType=VARCHAR}
+    </select>
+    
+    <update id="setTeamImage" parameterType="com.spring.jamplan.model.TeamInfoVO">
+    	UPDATE TEAMINFO SET TEAMIMAGE=#{teamImage, jdbcType=VARCHAR} WHERE TEAMNAME=#{teamName, jdbcType=VARCHAR}
+    </update>
+    
+    <update id="setUserImage" parameterType="com.spring.jamplan.model.UserVO">
+    	UPDATE USERINFO SET IMAGE={#image, jdbcType=VARCHAR} WHERE ID=#{id, jdbcType=VARCHAR}
+    </update>
+    
+    <delete id="removeTeamAsLeader" parameterType="com.spring.jamplan.model.TeamInfoVO">
+        DELETE TEAMINFO WHERE TEAMNAME=#{teamName, jdbcType=VARCHAR}
+    </delete>
+    
+    <delete id="signOutTeamAsMember" parameterType="com.spring.jamplan.model.TeamInfoVO">
+        DELETE TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR}
+            
+       <if test="id != null">
+           AND TEAMNAME=#{teamName, jdbcType=VARCHAR} AND ROLE=2
+        </if>
+    </delete>
+</mapper>

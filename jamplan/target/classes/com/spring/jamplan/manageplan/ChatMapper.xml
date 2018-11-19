@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.spring.jamplan.manageplan.ChatMapper">
+
+	<resultMap type="com.spring.jamplan.model.UserVO" id="userResultMap">
+		<result property="id" column="id" />
+		<result property="image" column="image" />
+	</resultMap>
+	
+	<resultMap type="com.spring.jamplan.model.TeamInfoVO" id="teamInfoResultMap">
+		<result property="teamNo" column="teamNo" />
+		<result property="teamName" column="teamName" />
+		<result property="id" column="id" />
+		<result property="role" column="role" />
+		<result property="planNo" column="planNo" />
+		<result property="planName" column="planName" />
+	</resultMap>
+	
+	
+	<select id="chatConnect" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
+		SELECT unique id FROM TEAMINFO WHERE TEAMNAME=#{teamName, jdbcType=VARCHAR} AND PLANNAME=#{planName, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getImageName" parameterType="com.spring.jamplan.model.UserVO" resultMap="userResultMap">
+		SELECT IMAGE FROM USERINFO WHERE ID=#{id, jdbcType=VARCHAR}
+	</select>
+</mapper>

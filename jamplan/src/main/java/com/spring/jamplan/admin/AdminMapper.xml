@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.spring.jamplan.admin.AdminMapper">
+	<resultMap type="com.spring.jamplan.model.UserVO" id="userResultMap">
+		<result property="id" column="id" />
+        <result property="email" column="email" />
+        <result property="pass" column="pass" />
+        <result property="nation" column="nation" />
+        <result property="gender" column="gender" />
+        <result property="travelType" column="travelType" />
+        <result property="hobby" column="hobby" />
+        <result property="image" column="image" />
+        <result property="age" column="age" />
+        <result property="isAdmin" column="isAdmin" />
+        <result property="signDate" column="signDate" />
+        <result property="authCode" column="authCode" />
+	</resultMap>
+	
+	<resultMap type="com.spring.jamplan.model.TeamInfoVO" id="teamInfoResultMap">
+        <result property="teamNo" column="teamNo" />
+        <result property="teamName" column="teamName" />
+        <result property="id" column="id" />
+        <result property="role" column="role" />
+        <result property="planNo" column="planNo" />
+        <result property="planName" column="planName" />
+    </resultMap>
+    
+    <resultMap type="com.spring.jamplan.model.PlanVO" id="planResultMap">
+        <result property="planNo" column="planNo" />
+        <result property="planName" column="planName" />
+        <result property="goodCount" column="goodCount" />
+        <result property="readCount" column="readCount" />
+        <result property="isOpen" column="isOpen" />
+    </resultMap>
+	
+	<select id="adminTeamSearch" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
+		SELECT * FROM TEAMINFO WHERE TEAMNAME LIKE '%'||#{teamName, jdbcType=VARCHAR}||'%'
+		
+		<if test="teamName != null">
+			AND ROLE=0
+		</if>
+	</select>
+	
+	<select id="adminPlanSearch" parameterType="com.spring.jamplan.model.PlanVO" resultMap="planResultMap">
+		SELECT planNo, planName, goodCount, readCount, isOpen FROM PLAN 
+			WHERE PLANNAME LIKE '%'||#{planName, jdbcType=VARCHAR}||'%'
+	</select>
+	
+	<select id="adminUserSearch" parameterType="com.spring.jamplan.model.UserVO" resultMap="userResultMap">
+		SELECT ID, EMAIL, GENDER, NATION, TRAVELTYPE, AGE FROM USERINFO 
+			WHERE ID=#{id, jdbcType=VARCHAR}
+		
+	</select>
+	
+	<delete id="removeTeam" parameterType="com.spring.jamplan.model.TeamInfoVO">
+		DELETE TEAMINFO WHERE TEAMNAME=#{teamName, jdbcType=VARCHAR}
+		
+	</delete>
+	
+	<delete id="removeUser" parameterType="com.spring.jamplan.model.UserVO" >
+		DELETE USERINFO WHERE ID=#{id, jdbcType=VARCHAR}
+	</delete>
+	
+</mapper>

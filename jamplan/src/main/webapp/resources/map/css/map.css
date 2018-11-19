@@ -1,0 +1,59 @@
+#map {
+   height: 570px;
+   width: 760px; 
+   float: left;
+   margin: 4px 4px 0 0;
+   border: 3px solid #334d99;
+   display: inline-block;
+} 
+.controls {
+    margin-top: 10px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+#searchInput {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 17px;
+    margin-top: 10px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 60%;
+    height: 7%;
+}
+
+#searchInput:focus {
+    border-color: #4d90fe;
+}
+
+#main-aside{
+display: inline-block;
+width: 200px;
+float:left;
+} 
+
+#test{
+	width: 760px;
+    height: 570px;
+}
+
+#vertical_buttons{
+    height: 570px;
+    width: 250px;
+    overflow-y: scroll;
+    margin-right: -40px;
+    margin-left: 5px;
+}
+
+#mapTable{
+	height: 570px;
+    width: 1015px;
+}
+

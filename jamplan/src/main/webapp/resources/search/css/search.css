@@ -1,0 +1,181 @@
+@charset "UTF-8";
+
+* {box-sizing: border-box;}
+      
+      .container-fluid {
+         padding-right: 0px !important;
+         padding-left: 0px !important;
+      }
+      
+      .site-section {
+      	padding-top: 0px !important;
+      	padding-bottom: 0px !important;
+      }
+     
+   
+      /*>>>>>>>>>>>>>> top bar에 대한 css <<<<<<<<<<<<<<<<*/
+      .topnav {
+        overflow: hidden;
+        background-color: rgb(72, 81, 103);
+        opacity: 20;
+      }
+      
+      .topnav a {
+        float: left;
+        color: #E7E1C3;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        margin: 0 auto;
+      }
+      
+      .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+      
+      .topnav-centered a {
+        float: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+         
+      }
+      
+      .topnav-left {
+      	float : left;
+      }
+      
+      .topnav-left a {
+      	 margin-top: 16px;
+         margin-bottom: 16px;
+         padding-top: 16px; 
+      }
+      
+      .topnav-right {
+        float: right;
+      }
+      
+      .topnav-right a {
+         margin-top: 16px;
+         margin-bottom: 16px;
+         padding-top: 16px; 
+      }
+      /*>>>>>>>>>>>>>>> top bar에 대한 css 끝 <<<<<<<<<<<<*/
+      
+      /* 검색에대한거!!!*/
+      .moveSearch {
+      	margin-left : 33%;
+      }
+      /* card에대한거!!!! */
+      .cardMargin {
+      	margin-bottom : 10%;
+      	background-color: #EAE6DA;
+      	text-align : center;
+      	
+      }
+      /* 뿌려줄때 컨테이너패딩값 */
+      .conPadding {
+      	padding-left : 40px !important;
+      	padding-right : 40px !important;
+      }
+      
+      
+      /*>>>>>>>>>>>>>>>> 사이드바에 대한 css<<<<<<<<<<<<<<<< */
+       .row.content {
+          margin: auto;
+          height: 1500px
+       }
+       
+       .sidenav {
+         background-color: #f1f1f1;
+         height: 100%;
+       }
+       
+       .input-group-btn {
+          padding-left: 5px;
+       }
+       
+       footer {
+         background-color: #555;
+         color: white;
+         padding: 15px;
+       }
+       
+       @media screen and (max-width: 767px) {
+         .sidenav {
+           height: auto;
+           padding: 15px;
+         }
+         
+         .row.content {height: auto;} 
+       }
+      /*>>>>>>>>>>>>>>>> 사이드바에 대한 css 끝 <<<<<<<<<<<<<<<< */
+       
+       
+       
+      /*>>>>>>>>>>>>>>>>>>> 팀 검색창에 대한 css <<<<<<<<<<<<<<<<<<<<<<<<*/
+      
+      .searchwrapper {
+        width: 90%;
+        margin: 25% auto;
+        margin: 20px 34.5px;
+      }
+      .searchbox {
+        background-color:#fff;
+        padding: 10px 76px 10px 40px;
+        border-radius: 50px;
+      }
+      .searchbox [class*="col-"] {
+        padding: 0px;
+      }
+      
+      .searchbox .col-md-5, .searchbox .col-md-3, .searchbox .col-md-1 { 
+        padding-top: 12px; 
+        padding-bottom: 12px;
+      }
+      .searchbox .form-control {
+        border-color: transparent;
+        border-right:solid 1px rgba(0,0,0,0.10);
+        
+      }
+      .searchbox select.form-control {
+        border-right:solid 1px transparent;
+      }
+      .searchbox .form-control:focus {
+        outline: 0;
+      }
+      .searchbox .btn { 
+         border-radius:40px; 
+         padding:10px 20px; 
+         margin-left: 10px;
+      }
+      
+      @media (max-width:767px) {
+         .searchbox .btn { width:100%; }
+         .searchbox {
+           padding: 20px 40px;
+         }
+         
+         .searchbox .form-control {
+           border-color: transparent;
+           border-bottom:solid 1px rgba(0,0,0,0.10);
+         }
+         
+         .searchbox select.form-control {
+           border-bottom:solid 1px transparent;
+         }
+      }
+      
+      /* 폼양식에 대한 css */
+      #selectionForm {
+         width: 100%;
+      }
+      
+.top-bar .container .row .social a {
+         padding-top: 10px !important;
+      }      
+      /*>>>>>>>>>>>>>>>>>>> 팀 검색창에 대한 css 끝<<<<<<<<<<<<<<<<<<<<<<<<*/

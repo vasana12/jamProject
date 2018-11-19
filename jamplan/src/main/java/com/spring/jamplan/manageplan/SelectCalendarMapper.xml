@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--맵퍼클래스 네임스페이스 : 맵퍼.xml과 맵퍼.java를 맴핑 -->
+<mapper namespace="com.spring.jamplan.manageplan.SelectCalendarMapper">
+
+	<!-- column 은 대소구분 하지 않는다. 디비 컬럼을 의미함 참고할 점은 resultMap 의 id는 소문자로 시작 왜?->객체이름이니까 -->
+	<resultMap type="com.spring.jamplan.model.CalendarVO"
+		id="CalendarResultMap">
+		<result property="id" column="id" />
+		<result property="planNo" column="planNo" />
+		<result property="selectDate" column="selectDate"/>
+		<result property="selectMonth" column="selectMonth"/>
+		<result property="dateCount" column="dateCount" />
+		<result property="confirmIndicator" column="confirmed" />
+	</resultMap>
+
+	<select id="getCalendarSelectDate"
+		parameterType="int"
+		resultMap="CalendarResultMap">
+		select * from planDate where planNo = #{planNo, javaType = int}
+	</select>
+
+</mapper>
+	
+	
+	
+	
+	
+	
+	
+	
+	

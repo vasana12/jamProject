@@ -1,0 +1,156 @@
+@charset "UTF-8";
+/**@author Taehyuk, Kim
+
+ * 
+ */	
+ 
+/*구글 한글폰트 불러오는 곳*/
+@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
+    
+h1, h2, h3, h4, h5, p {
+	font-family: 'Jeju Myeongjo', serif !important;
+}
+/*구글 한글폰트 불러오는 부분 끝*/
+
+	/* >>>>>>>>>>>>>>>>>>>>>>>>>> 섹션 부분 <<<<<<<<<<<<<<<<<<<<<<<<<<*/
+	.site-section {
+		padding-top: 50px !important;
+	} 
+	
+	.sidebar {
+		padding-top: 138px;
+	}
+	
+	#personalInfo {
+		margin-right: 0px;
+	}
+	/* >>>>>>>>>>>>>>>>>>>>>>>>>> 섹션 부분 <<<<<<<<<<<<<<<<<<<<<<<<<<*/
+	
+	
+	/* >>>>>>>>>>>>>>>> 모달창 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/	
+	.modal-header-color {
+    color:#FFFFFF;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #000000;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+	}
+	
+	#modal-content {
+	  font-family: 'Open Sans', sans-serif !important;
+	  font-weight: 300;
+	  line-height: 1.42em;
+	  color:#A7A1AE;
+	  background-color:#1F2739;
+	}
+	
+	
+	#teamImage {
+		padding-left: 0 !important;
+	}
+	
+	/* >>>>>>>>>>>>>>>> 모달창 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/		
+
+    /*>>>>>>>>>>>>>>>>> 프로필 사진 업로드 부분에 대한 css <<<<<<<<<<<<<<<<<*/
+    /* #imageSearch {
+       border-radius: 5px;
+       padding: 10px;
+	   background: red; 
+	   display: table;
+	   color: #fff;
+    } */
+    
+    /* input[type="file"] {
+	    display: none;
+	    
+	} */
+	
+	#imagePreview {
+	  border-radius: 50%;
+	  padding: 0 10px;
+	}
+	
+	/* .post-entry-horzontal a .text {
+		padding-top: 10px !important;
+		padding-bottom: 10px !important;
+	} */
+	
+	#infoForm {
+		
+	}
+    /*>>>>>>>>>>>>>>>>> 프로필 사진 업로드 부분에 대한 css 끝<<<<<<<<<<<<<<<<<*/
+
+
+    /*>>>>>>>>>>>>>>>>> autocomplete에 대한 css <<<<<<<<<<<<<<<<<<<<<<<*/
+    .autocomplete {
+	  /*the container must be positioned relative:*/
+	  position: relative;
+	  display: inline-block;
+	}
+	
+	.autocomplete-items {
+	  position: absolute;
+	  border: 1px solid #d4d4d4;
+	  border-bottom: none;
+	  border-top: none;
+	  z-index: 99;
+	  /*position the autocomplete items to be the same width as the container:*/
+	  top: 100%;
+	  left: 0;
+	  right: 0;
+	}
+	
+	.autocomplete-items div {
+	  padding: 10px;
+	  cursor: pointer;
+	  background-color: #fff; 
+	  border-bottom: 1px solid #d4d4d4; 
+	}
+	
+	.autocomplete-items div:hover {
+	  /*when hovering an item:*/
+	  background-color: #e9e9e9; 
+	}
+	
+	.autocomplete-active {
+	  /*when navigating through the items using the arrow keys:*/
+	  background-color: DodgerBlue !important; 
+	  color: #ffffff; 
+	}
+	
+	/*>>>>>>>>>>>>>>>>> autocomplete에 대한 css 끝 <<<<<<<<<<<<<<<<<<<<<<<*/
+	
+	/*>>>>>>>>>>>>>>>>> 팀관리 테이블에 대한 css <<<<<<<<<<<<<<<<<<<<<<<*/
+	#leaderTable {
+	  margin: 50px auto;
+	}
+	
+	#leaderTable tr {
+	  margin: 0px auto;
+	}
+	
+	.nav-tabs {
+		margin-bottom: 5% !important;
+	}
+	
+	
+	
+	.col-md-9 {
+		max-width: 100% !important;
+	}
+	
+	/*>>>>>>>>>>>>>>>>> 팀관리 테이블에 대한 css 끝 <<<<<<<<<<<<<<<<<<<<<<<*/
+	
+	
+	/*>>>>>>>>>>>>>>>>> footer <<<<<<<<<<<<<<<<<<<<<<<*/
+	.site-footer {
+		padding-bottom: 0px !important;
+	}
+	
+	/*>>>>>>>>>>>>>>>>> footer <<<<<<<<<<<<<<<<<<<<<<<*/
+	

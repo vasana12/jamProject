@@ -1,0 +1,133 @@
+@charset "UTF-8";
+
+#divBox{
+	width: 1000px;
+}
+.userId{
+	font-size: 20px;
+	height: 50px;
+	overflow-y:scroll;
+    background-color: white;
+} 
+.bindD{
+ height: 160px;
+ margin : 1px 1px 1px 1px;
+}
+
+/* .heart{
+	position: absolute;
+	 top:0; left: 0;
+	width: 100%;
+	height: 100%;
+	top: 75px;
+    left: 5px;
+} */
+.heart{
+	position: absolute; top:0; left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.date{ 
+	padding: 0px 0px 0px 0px;
+}
+.dateButton{
+	width: 70px;
+	height: 30px;
+}
+#calendarDiv {
+	text-align: left;
+	/* padding: 0px 30px 10px 10px;
+	margin:  0px 30px 10px 10px; */
+	width: 788px;
+}
+#sun{
+	color: rgb(178, 83, 53);
+}
+#sat{
+	color: rgb(71, 178, 151);
+}
+#calendar {
+	text-align: left;
+	background-color: white;
+}
+
+.goodBut{
+	width: 70px;
+	height: 30px;
+}
+table {
+	border-spacing: 0px;
+	border-collapse: separate;
+}
+#calHead{
+	height: 30px;
+}
+.claTh{
+	padding: 0 10px 0 0;
+}
+#cal {
+	font-size: 25px;
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+	border: solid;
+	border-width: 0.5px;
+	border-spacing: 0px;
+	border-collapse: separa	te;
+	border-color: rgb(180, 204, 202);
+}
+.countDate{
+	color: white;
+	font-size: 18px;
+	margin-left: 16px;
+	margin-top: 10px;
+	position: absolute;
+}
+/* .heart{
+	width: 50px;
+	height: 45px;
+	width: 100%;
+	height: 100%;
+	float: left;
+	position:relative;
+	background-image: url(../img/heart.jpg);                                                               
+} */
+
+.heart{
+	width: 50px;
+	height: 45px;
+	float: left;
+	position:relative;
+	background-image: url(../img/heart.jpg);                                                               
+}
+
+
+#cal thead tr th {
+	width: 60px;
+	height: 50px;
+	line-height: 0px;
+	background-color : white;
+}
+
+#cal td {
+	width: 13%;
+	height: 0px;
+	padding: 0px 0px 0px 0;
+	border: solid;
+	border-color: rgb(180, 204, 202);
+	border-width: 0.3px;
+	background-color: white;
+	vertical-align: top;
+	height: 0px;
+}
+
+select.form-control{
+	width: 100px;
+	margin: 0px 5px 0 0;
+}
+
+select.form-control:not([size]):not([multiple]) {
+    height: 33px;
+}

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--맵퍼클래스 네임스페이스 : 맵퍼.xml과 맵퍼.java를 맴핑 -->
+<mapper namespace="com.spring.jamplan.manageplan.CalendarMapper">
+
+	<!-- column 은 대소구분 하지 않는다. 디비 컬럼을 의미함 참고할 점은 resultMap 의 id는 소문자로 시작 왜?->객체이름이니까 -->
+	<resultMap type="com.spring.jamplan.model.PlanVO"
+		id="PlanResultMap">
+		<result property="planNo" column="PLANNO" />
+		<result property="teamNo" column="TEAMNO" />
+		<result property="goodCount" column="GOODCOUNT" />
+		<result property="readCount" column="READCOUNT" />
+		<result property="isOpen" column="ISOPEN" />
+		<result property="planName" column="PLANNAME" />
+		<result property="hashTag" column="HASTAG" />
+		<result property="planDate" column="PLANDATE" />
+	</resultMap>
+
+	<select id="getAllPlans" resultMap="PlanResultMap">
+		select * from teamInfo <!-- plan  where isopen=0 -->
+	</select>
+
+	<select id="getTeamPlan"
+		parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
+		select * from teaminfo where teamNo = #{teamNo, javaType = int }
+	</select>
+
+	<!-- column 은 대소구분 하지 않는다. 디비 컬럼을 의미함 참고할 점은 resultMap 의 id는 소문자로 시작 왜?->객체이름이니까 -->
+	<resultMap type="com.spring.jamplan.model.CalendarVO"
+		id="CalendarResultMap">
+		<result property="id" column="id" />
+		<result property="planNo" column="planNo" />
+		<result property="selectDate" column="selectDate" />
+		<result property="dateCount" column="dateCount" />
+		<result property="confirmIndicator" column="confirmIndicator" />
+	</resultMap>
+	
+	<!-- getTeamRole -->
+	<resultMap type="com.spring.jamplan.model.TeamInfoVO" id="teamInfoResultMap">
+		<result property="teamNo" column="teamNo" />
+		<result property="teamName" column="teamName" />
+		<result property="id" column="id" />
+		<result property="role" column="role" />
+		<result property="planNo" column="planNo" />
+		<result property="planName" column="planName" />
+		<result property="jonDate" column="jonDate" />
+	</resultMap>
+	
+	<select id="getMemberId" parameterType="com.spring.jamplan.model.CalendarVO" resultMap="CalendarResultMap">
+		select * from plandate where planNo = #{planNo, javaType = int} order by selectdate asc
+	</select>
+	
+	<select id="getSelectFixDate" parameterType="com.spring.jamplan.model.CalendarVO" resultMap="CalendarResultMap">
+		 select planNo, selectDate, id, dateCount, confirmIndicator from plandate
+		 where 
+		 planNo = #{planNo, javaType = int} and 
+		 SELECTDATE = #{selectDate, javaType = String}
+	</select>
+	
+	<update id = "updateFixDate" parameterType="com.spring.jamplan.model.CalendarVO">
+		update plandate set confirmIndicator = #{confirmIndicator, javaType = int} where planNo = #{planNo, javaType = int} and selectDate = #{selectDate, javaType = String}
+	</update>
+	
+	<select id ="getTeamRole" parameterType="hashmap" resultMap="teamInfoResultMap">
+		select * from teaminfo where id = #{id, javaType = String} and planNo = #{planNo, javaType= int}
+	</select>
+
+	<select id="getCalendarSelectDate" parameterType="int"
+		resultMap="CalendarResultMap">
+		select * from planDate where planNo = #{planNo, javaType = int}
+	</select>
+	
+	<select id ="checkSelectDate" parameterType = "com.spring.jamplan.model.CalendarVO" resultMap="CalendarResultMap">
+		select * from plandate where id = #{id, javaType = String} and selectDate = #{selectDate, javaType=String}
+	</select>
+	
+	<select id ="getCountDate" parameterType = "com.spring.jamplan.model.CalendarVO" resultMap="CalendarResultMap">
+		select * from plandate where selectDate = #{selectDate, javaType=String}
+	</select>
+	
+	<update id="updateCountDate" parameterType = "com.spring.jamplan.model.CalendarVO">
+		update plandate set dateCount = #{dateCount, javaType = int} 
+		where planNo = #{planNo, javaType = int} and selectDate = #{selectDate, javaType= String}
+	</update>
+
+	<insert id="insertSelectDate"
+		parameterType="com.spring.jamplan.model.CalendarVO">
+		insert into plandate
+		(planNo,selectDate,id,datecount,confirmIndicator)
+		values
+		(
+			#{planNo, javaType = int},
+			#{selectDate, javaType = String},
+			#{id, javaType =String},
+			#{dateCount, javaType = int},
+			#{confirmIndicator, javaType = int}
+		)
+	</insert>
+	
+	<delete id="deleteSelectDate" parameterType = "com.spring.jamplan.model.CalendarVO">
+		delete from plandate where id = #{id, javaType =String} 
+		and selectDate = #{selectDate,javaType= String}
+		and planNo = #{planNo, javaType = int}
+	</delete>
+
+</mapper>

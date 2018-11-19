@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- 뷰(jsp)와 관련없는 빈 설정에 사용. servlet-context.xml은 뷰(jsp)와 관련된 빈 설정에 사용 -->
+	<!-- 아래 클래스의 빈 객체를 datasource로 생성하고 프로퍼티는 해당 객체의 속성이라 생각하면 된다. -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="oracle.jdbc.OracleDriver" />
+		<!--아래의 부분은 오라클 버전이나 계정에 따라 다르게 적는다. -->
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="hr" />
+		<property name="password" value="123456" />
+	</bean>
+
+	<!--세션 연결 생성 관리 -->
+	<!-- SqlSession 클래스를 상속받은 클래스 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- ref는 위 클래스의 빈객체를 해당 개체의 속성에 맵핑시켜주는 작업을 한다. -->
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage" value="com.spring.jamplan" />
+		<!-- <property name="mapperLocations" value="classpath:/com/spring/springmybatis/MemberMapper.xml"/> 
+			이방식은 직접 xml파일을 지정하는 방법 -->
+		<property name="mapperLocations" value="classpath:/com/spring/jamplan/**/*.xml" /><!-- **모든  하위 파일 ,폴더,패키지 의 xml 문서 맵핑시켜줌 -->
+	</bean>
+	
+	   <!-- 메일 보내기 -->
+   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+      <property name="host" value="smtp.gmail.com" />
+      <property name="port" value="587" />
+      <property name="username" value="wodud6349@gmail.com" />
+      <property name="password" value="ahfmsek3!" />
+
+
+   <!-- email 요청시는 SMTP -->
+      <property name="javaMailProperties">
+         <props>
+            <prop key="mail.transport.protocol">smtp</prop>
+            <prop key="mail.smtp.auth">true</prop>
+            <prop key="mail.smtp.starttls.enable">true</prop>
+            <prop key="mail.debug">true</prop>
+         </props>
+      </property>
+   </bean>
+
+	<!-- 세션을 사용하기 위한 레퍼와 실제 데이터를 연결하는 메소드를 맵핑시켜주는 것을 이놈이 저장 -->
+	<!-- 실질적인 세션 관리 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<!-- 생성자의 파라미터로 ref로 전달받아 객체 생성 -->
+		<constructor-arg ref="sqlSessionFactory" />
+		<!-- sqlSessionTemplate는 클래스고 constructor=arg ref는 해당 클래스 생성자에 매개변수로 대입할 
+			값 -->
+	</bean>
+	
+	<!-- DAO가 여러개 여서 트랜잭션 처리 -->
+	<bean id = "transactionManager" class ="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name = "dataSource" ref = "dataSource"></property>
+	</bean>
+	<tx:annotation-driven/>
+</beans>
